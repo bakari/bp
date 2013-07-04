@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Window
+	x:Class="MainWindowPlugin.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:AvalondDock="clr-namespace:AvalonDock;assembly=AvalonDock"
+	Title="BP - Prostředí pro snadný vývoj skriptů"
+	Height="600"
+	Width="800"
+	Closing="Window_Closing">
+	<DockPanel>
+		<!-- Main menu -->
+		<Menu
+			Name="mainMenu"
+			DockPanel.Dock="Top"></Menu>
+		<!-- ToolBar -->
+		<ToolBar
+			Name="toolBar"
+			DockPanel.Dock="Top"
+			Visibility="Collapsed">
+			<ToolBar.Resources>
+				<Style
+					TargetType="{x:Type Image}">
+					<Style.Triggers>
+						<DataTrigger
+							Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ButtonBase}, AncestorLevel=1}, Path=IsEnabled}"
+							Value="False">
+							<Setter
+								Property="Opacity"
+								Value="0.30" />
+						</DataTrigger>
+					</Style.Triggers>
+				</Style>
+			</ToolBar.Resources>
+		</ToolBar>
+		<!-- StatusBar -->
+		<StatusBar
+			x:Name="statusBar"
+			DockPanel.Dock="Bottom"
+			Height="26">
+			<StatusBarItem>
+				<TextBlock
+					x:Name="statusLabel"
+					ToolTip="Status"
+					Text="Loading..." />
+			</StatusBarItem>
+			<StatusBarItem>
+				<ProgressBar
+					x:Name="progressBar"
+					Height="20"
+					Width="100"
+					Orientation="Horizontal"
+					IsIndeterminate="False" />
+			</StatusBarItem>
+		</StatusBar>
+		<Grid>
+			<AvalondDock:DockingManager
+				PropertyChanged="DockManager_PropertyChanged"
+				x:Name="dockManager"
+				Grid.Row="0">
+				<AvalondDock:ResizingPanel
+					x:Name="mainResizingPanel"
+					Orientation="Horizontal">
+					<AvalondDock:ResizingPanel
+						x:Name="centerResizingPanel"
+						Orientation="Vertical">
+						<AvalondDock:DocumentPane
+							x:Name="tabPane" />
+					</AvalondDock:ResizingPanel>
+				</AvalondDock:ResizingPanel>
+			</AvalondDock:DockingManager>
+		</Grid>
+	</DockPanel>
+</Window>
